@@ -1,0 +1,25 @@
+{
+    "type": "module",
+    "engines": {
+        "node": "18.*.*"
+    },
+    "files": [
+        "src"
+    ],
+    "scripts": {
+    },
+    "keywords": [
+        "javascript",
+        "nodejs"
+    ],
+    "author": "Amit Gazal <snamitgazal@gmail.com>",
+    "license": "MIT",
+    "repository": {
+        "url": "https://github.com/AmitGazal/NodeTLV2023",
+        "type": "git"
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}
