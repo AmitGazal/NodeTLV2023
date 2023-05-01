@@ -18,3 +18,7 @@ while (true) {
     const ticket = ticketGenerator.next().value
     console.log(ticket)
 }
+
+// Example with for of
+// State is saved in the return value
+// Babel ES5

@@ -1,0 +1,8 @@
+Talk with Benky / Nitzan
+Remove the Promise part
+Connection between streams and iterators (how do you convert between them, both ways)
+How to close a stream? (return and from, not only next, other methods)
+Compare between the past and today. instead of .pipe, .end...use await. Callback -> Promises
+Run code when for await is finished or when it failed
+How to run async iterator or streams in parallel (instead of for await)
+backpressure / throattling
