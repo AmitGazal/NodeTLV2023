@@ -1,9 +1,9 @@
-import { Configuration, OpenAIApi } from "openai";
+import { Configuration, OpenAIApi } from "openai"
 
 const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
-  });
-const openai = new OpenAIApi(configuration);
+  apiKey: process.env.OPENAI_API_KEY,
+})
+const openai = new OpenAIApi(configuration)
 
 const PROMPT = `
 Create a ticket for my web development team.
@@ -86,22 +86,29 @@ Here are some examples:
 async function* generateEngineeringTickets() {
   while (true) {
     const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{"role": "user", "content": PROMPT}],
-        temperature: 0.6,
-        max_tokens: 2000,
-      });
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: PROMPT }],
+      temperature: 0.6,
+      max_tokens: 2000,
+    })
 
-    const ticket = completion.data.choices[0].message.content;
+    const ticket = completion.data.choices[0].message.content
 
-    yield ticket;
+    yield ticket
   }
 }
 
-const ticketGenerator = generateEngineeringTickets();
-for (let i = 0; i < 1; i++) {
-  const ticket = await ticketGenerator.next();
-  console.log(ticket.value);
-}
+const ticketGenerator = generateEngineeringTickets()
+// for (let i = 0; i < 1; i++) {
+//   const ticket = await ticketGenerator.next();
+//   console.log(ticket.value);
+// }
 
-// for await
+const maxExecution = 2
+let execution = 0
+for await (const ticket of ticketGenerator) {
+  if (++execution > maxExecution) {
+    break
+  }
+  console.log(ticket)
+}
