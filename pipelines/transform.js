@@ -11,39 +11,27 @@ const createTicketGenerator = function* () {
   let ticketNumber = 0
   while (true) {
     if (ticketNumber > 10) {
-        return
+      return
     }
-    yield {
-      ticketNumber: ++ticketNumber,
-      date: new Date(),
-      description: ticketDescription(),
-      priority: ticketPriority(),
-      assignee: ticketAssignee(),
-    }
-  }
-}
-
-class TicketStream extends Readable {
-  constructor(options) {
-    super(options)
-    this.generator = createTicketGenerator()
-  }
-
-  _read() {
-    const { value, done } = this.generator.next()
-    if (done) {
-      this.push(null)
-    } else {
-      this.push(JSON.stringify(value))
-    }
+    yield JSON.stringify(
+      {
+        ticketNumber: ++ticketNumber,
+        date: new Date(),
+        description: ticketDescription(),
+        priority: ticketPriority(),
+        assignee: ticketAssignee(),
+      },
+      null,
+      2
+    )
   }
 }
 
 async function streamJsonToCsvFile(destinationPath) {
   const ticketGenerator = createTicketGenerator()
-  const readStream = new TicketStream(ticketGenerator)
+  const ticketStream = Readable.from(ticketGenerator)
   const jsonToCsvTransform = new Transform({
-    transform(chunk, encoding, callback) {
+    transform(chunk, _encoding, callback) {
       const json = JSON.parse(chunk)
       const csv = `${Object.values(json).join(',')}\n`
       callback(null, csv)
@@ -51,11 +39,22 @@ async function streamJsonToCsvFile(destinationPath) {
   })
   const writeStream = fs.createWriteStream(destinationPath, 'utf8')
   try {
-    await pipeline(readStream, jsonToCsvTransform, writeStream)
+    await pipeline(ticketStream, jsonToCsvTransform, writeStream)
     console.log('File copied successfully.')
   } catch (error) {
     console.error('Error copying file:', error)
   }
+
+  // ticketStream.pipe(jsonToCsvTransform).pipe(writeStream)
+  // ticketStream.on('error', (error) => {
+  //   console.error('Error reading file:', error)
+  // })
+  // jsonToCsvTransform.on('error', (error) => {
+  //   console.error('Error transforming file:', error)
+  // })
+  // writeStream.on('error', (error) => {
+  //   console.error('Error writing file:', error)
+  // })
 }
 
 // Usage example
