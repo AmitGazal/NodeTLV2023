@@ -22,3 +22,4 @@ Comparison
 - https://medium.com/sessionstack-blog/how-javascript-works-streams-and-their-use-cases-79d127522166
 - https://dev.to/micahriggan/streams-and-generators-36e1
 - https://www.tutorialspoint.com/nodejs/nodejs_streams.htm
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript

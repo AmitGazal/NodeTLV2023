@@ -18,24 +18,8 @@ const createTicketGenerator = function* () {
   }
 }
 
-class TicketStream extends Readable {
-  constructor(options) {
-    super(options)
-    this.generator = createTicketGenerator()
-  }
-
-  _read() {
-    const { value, done } = this.generator.next()
-    if (done) {
-      this.push(null)
-    } else {
-      this.push(JSON.stringify(value))
-    }
-  }
-}
-
 const createTicketGeneratorOutOfStream = async function* () {
-  const ticketStream = new TicketStream()
+  const ticketStream = Readable.from(createTicketGenerator())
   for await (const chunk of ticketStream) {
     yield JSON.parse(chunk)
   }

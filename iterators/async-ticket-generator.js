@@ -7,7 +7,7 @@ const openai = new OpenAIApi(configuration)
 
 const PROMPT = `
 Create a ticket for my web development team.
-A ticket should contain: ticketNumber, date, description, priority, and asignee.
+A ticket should contain: ticketNumber, date, description, priority, and assignee.
 Assignee can be one of: Node McNodeface, Captain Codebeard, Async Avenger, Promise Paladin, The Nodeinator, The Callback Kid, Dr. Code Love, Commander Console, The Nodester, and Codezilla.
 Be creative with the description.
 
@@ -83,7 +83,7 @@ Here are some examples:
   assignee: 'Dr. Code Love'
 }
 `
-async function* generateEngineeringTickets() {
+async function* createAsyncGenerator() {
   while (true) {
     const completion = await openai.createChatCompletion({
       model: "gpt-3.5-turbo",
@@ -98,13 +98,13 @@ async function* generateEngineeringTickets() {
   }
 }
 
-const ticketGenerator = generateEngineeringTickets()
+const ticketGenerator = createAsyncGenerator()
 // for (let i = 0; i < 1; i++) {
 //   const ticket = await ticketGenerator.next();
 //   console.log(ticket.value);
 // }
 
-const maxExecution = 2
+const maxExecution = 7
 let execution = 0
 for await (const ticket of ticketGenerator) {
   if (++execution > maxExecution) {
