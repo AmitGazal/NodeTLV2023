@@ -23,3 +23,5 @@ Comparison
 - https://dev.to/micahriggan/streams-and-generators-36e1
 - https://www.tutorialspoint.com/nodejs/nodejs_streams.htm
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript
+
+https://github.com/nodejs/node/blob/main/lib/internal/streams/readable.js#L1097

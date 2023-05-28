@@ -2,23 +2,21 @@ import {
   ticketDescription,
   ticketPriority,
   ticketAssignee,
-} from "./ticket-commons.js"
+} from './ticket-commons.js'
 
-const createTicketIterator = function () {
+function createTicketIterator() {
   let ticketNumber = 0
   return {
-    next: function () {
-      return {
-        value: {
-          ticketNumber: ++ticketNumber,
-          date: new Date(),
-          description: ticketDescription(),
-          priority: ticketPriority(),
-          assignee: ticketAssignee(),
-        },
-        done: false,
-      }
-    },
+    next: () => ({
+      value: {
+        ticketNumber: ++ticketNumber,
+        date: new Date(),
+        description: ticketDescription(),
+        priority: ticketPriority(),
+        assignee: ticketAssignee(),
+      },
+      done: false,
+    }),
     [Symbol.iterator]: function () {
       return this
     },

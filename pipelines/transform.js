@@ -37,9 +37,18 @@ async function streamJsonToCsvFile(destinationPath) {
       callback(null, csv)
     },
   })
+
+  const jsonToCsvGenerator = async function* (iterator) {
+    for await (const chunk of iterator) {
+      const json = JSON.parse(chunk)
+      const csv = `${Object.values(json).join(',')}\n`
+      yield csv
+    }
+  }
   const writeStream = fs.createWriteStream(destinationPath, 'utf8')
+
   try {
-    await pipeline(ticketStream, jsonToCsvTransform, writeStream)
+    await pipeline(ticketGenerator, jsonToCsvGenerator, writeStream)
     console.log('File copied successfully.')
   } catch (error) {
     console.error('Error copying file:', error)
