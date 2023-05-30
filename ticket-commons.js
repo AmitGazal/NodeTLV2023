@@ -35,3 +35,13 @@ export function ticketAssignee() {
     const assignee = assignees[Math.floor(Math.random() * assignees.length)];
     return assignee;
 }
+
+export function createTicket (ticketId) {
+    return {
+        ticketNumber: ticketId,
+        date: new Date(),
+        description: ticketDescription(),
+        priority: ticketPriority(),
+        assignee: ticketAssignee(),
+    }
+}

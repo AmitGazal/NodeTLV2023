@@ -1,19 +1,11 @@
 import {
-  ticketDescription,
-  ticketPriority,
-  ticketAssignee,
-} from "./ticket-commons.js"
+  createTicket,
+} from "../ticket-commons.js"
 
 const createTicketGenerator = function* () {
   let ticketNumber = 0
   while (true) {
-    yield {
-      ticketNumber: ++ticketNumber,
-      date: new Date(),
-      description: ticketDescription(),
-      priority: ticketPriority(),
-      assignee: ticketAssignee(),
-    }
+    yield createTicket(++ticketNumber)
   }
 }
 

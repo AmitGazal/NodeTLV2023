@@ -3,7 +3,7 @@ import {
   ticketDescription,
   ticketPriority,
   ticketAssignee,
-} from './ticket-commons.js'
+} from '../ticket-commons.js'
 
 const createTicketGenerator = function* () {
   let ticketNumber = 0

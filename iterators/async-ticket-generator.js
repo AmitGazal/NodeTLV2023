@@ -83,17 +83,22 @@ Here are some examples:
   assignee: 'Dr. Code Love'
 }
 `
+
+async function createTicket() {
+  const completion = await openai.createChatCompletion({
+    model: "gpt-3.5-turbo",
+    messages: [{ role: "user", content: PROMPT }],
+    temperature: 0.6,
+    max_tokens: 2000,
+  })
+
+  const ticket = completion.data.choices[0].message.content
+  return ticket
+}
+    
 async function* createAsyncGenerator() {
   while (true) {
-    const completion = await openai.createChatCompletion({
-      model: "gpt-3.5-turbo",
-      messages: [{ role: "user", content: PROMPT }],
-      temperature: 0.6,
-      max_tokens: 2000,
-    })
-
-    const ticket = completion.data.choices[0].message.content
-
+    const ticket = await createTicket()
     yield ticket
   }
 }
